@@ -12,13 +12,21 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
                 res.end(queryData);
             });
         });
-    }
+    };
+
+    const setHeaders = (res) => {
+        res.set({
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET,POST,PUT,PATCH,OPTIONS,DELETE'
+        });
+    };
 
     const app = express();
 
     app.use(bodyParser());
 
     app.use('/login/', (_, res) => {
+        setHeaders(res);
         res.end('itmo337221');
     });
 
@@ -26,6 +34,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         const currentFilePath = import.meta.url.substring(7);
         const readStream = createReadStream(currentFilePath);
 
+        setHeaders(res);
         readStream.on('open', () => readStream.pipe(res));
     });
 
@@ -35,6 +44,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
         sha1Creator.update(inputParam);
 
+        setHeaders(res);
         res.end(sha1Creator.digest('hex'));
     });
 
@@ -47,10 +57,12 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             addrQueryParam = req.body.addr;
         }
 
+        setHeaders(res);
         receiveQueryAddrData(addrQueryParam, res);
     });
 
     app.use((_, res) => {
+        setHeaders(res);
         res.end('itmo337221');
     });
 
