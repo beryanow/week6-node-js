@@ -37,7 +37,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         res.end('itmo337221');
     });
 
-    app.use('/wordpress/', (req, res) => {
+    app.use(['/wordpress/', '/wordpress/wp-json/wp/v2/'], (req, res) => {
         setHeaders(res);
         res.redirect('https://week8task.wordpress.com');
     });
