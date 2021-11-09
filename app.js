@@ -32,15 +32,17 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         res.end('itmo337221');
     });
 
-    app.post('/insert/', (req, _) => {
+    app.post('/insert/', (req, res) => {
+        setHeaders(res);
         const login = decodeURI(req.body.login);
         const password = decodeURI(req.body.password);
         const url = decodeURI(req.body.URL);
 
-        mongoose.connect(url).then(async () => {
+        mongoose.connect(url + "/users").then(async () => {
                 const User = mongoose.model('User', {login: String, password: String});
                 const user = new User({login, password});
                 await user.save();
+                res.end();
             }
         );
     });
