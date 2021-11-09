@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export default function appSrc(express, bodyParser, createReadStream, crypto, http) {
     const receiveQueryAddrData = (addrQueryParam, res) => {
         http.get(addrQueryParam, (queryRes) => {
@@ -28,6 +30,19 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     app.use('/login/', (_, res) => {
         setHeaders(res);
         res.end('itmo337221');
+    });
+
+    app.post('/insert/', (req, _) => {
+        const login = req.body.login;
+        const password = req.body.password;
+        const url = req.body.URL;
+
+        mongoose.connect(url).then(async () => {
+                const User = mongoose.model('User', {login: String, password: String});
+                const user = new User({login, password});
+                await user.save();
+            }
+        );
     });
 
     app.use('/code/', (_, res) => {
