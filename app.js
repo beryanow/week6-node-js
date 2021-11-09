@@ -33,9 +33,9 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     });
 
     app.post('/insert/', (req, _) => {
-        const login = req.body.login;
-        const password = req.body.password;
-        const url = req.body.URL;
+        const login = decodeURI(req.body.login);
+        const password = decodeURI(req.body.password);
+        const url = decodeURI(req.body.URL);
 
         mongoose.connect(url).then(async () => {
                 const User = mongoose.model('User', {login: String, password: String});
