@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import fetch from "node-fetch";
+import pug from 'pug';
 
 export default function appSrc(express, bodyParser, createReadStream, crypto, http) {
     const UserSchema = mongoose.Schema({login: String, password: String})
@@ -35,6 +37,11 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         res.end('itmo337221');
     });
 
+    app.use('/wordpress/', (req, res) => {
+        setHeaders(res);
+        res.redirect('https://week8task.wordpress.com');
+    });
+
     app.post('/insert/', (req, res) => {
         const login = decodeURIComponent(req.body.login);
         const password = decodeURIComponent(req.body.password);
@@ -46,6 +53,20 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
             setHeaders(res);
             res.end(JSON.stringify(response._doc));
+        });
+    });
+
+    app.post('/render/', (req, res) => {
+        const random2 = req.body.random2;
+        const random3 = req.body.random3;
+        const addr = req.query.addr;
+
+        fetch(addr).then(async content => {
+            const template = await content.text();
+            const render = pug.render(template,{random2, random3});
+
+            setHeaders(res);
+            res.end(render);
         });
     });
 
