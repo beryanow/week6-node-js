@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 
 export default function appSrc(express, bodyParser, createReadStream, crypto, http) {
+    const UserSchema = mongoose.Schema({login: String, password: String})
+    const UserModel = mongoose.model('User', UserSchema);
+
     const receiveQueryAddrData = (addrQueryParam, res) => {
         http.get(addrQueryParam, (queryRes) => {
             queryRes.setEncoding('utf8');
@@ -33,18 +36,17 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     });
 
     app.post('/insert/', (req, res) => {
-        setHeaders(res);
-        const login = decodeURI(req.body.login);
-        const password = decodeURI(req.body.password);
-        const url = decodeURI(req.body.URL);
+        const login = decodeURIComponent(req.body.login);
+        const password = decodeURIComponent(req.body.password);
+        const url = decodeURIComponent(req.body.URL);
 
-        mongoose.connect(url + "/users").then(async () => {
-                const User = mongoose.model('User', {login: String, password: String});
-                const user = new User({login, password});
-                await user.save();
-                res.end();
-            }
-        );
+        mongoose.connect(url).then(async () => {
+            const user = new UserModel({login, password});
+            const response = await user.save();
+
+            setHeaders(res);
+            res.end(JSON.stringify(response._doc));
+        });
     });
 
     app.use('/code/', (_, res) => {
