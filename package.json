@@ -6,6 +6,10 @@
   "repository": "https://github.com/beryanow/week6-node-js",
   "author": "Maxim Beryanov <33306395+beryanow@users.noreply.github.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
