@@ -7,4 +7,4 @@ import appSrc from './app.js';
 
 const app = appSrc(express, bodyParser, createReadStream, crypto, http);
 
-app.listen(8080);
+app.listen(process.env.PORT || 3000);
