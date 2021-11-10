@@ -39,8 +39,6 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     });
 
     app.get('/test/', async (req, res) => {
-        setHeaders(res);
-
         const URL = req.query.URL;
 
         const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
@@ -53,6 +51,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         await page.waitForSelector('#inp');
         let text = await (await page.$('#inp')).evaluate(textField => textField.value);
 
+        setHeaders(res);
         res.end(text);
     });
 
