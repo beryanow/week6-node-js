@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
 import pug from 'pug';
+import puppeteer from 'puppeteer';
 
 export default function appSrc(express, bodyParser, createReadStream, crypto, http) {
     const UserSchema = mongoose.Schema({login: String, password: String})
@@ -37,9 +38,22 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         res.end('itmo337221');
     });
 
-    app.use(['/wordpress/', '/wordpress/wp-json/wp/v2/'], (req, res) => {
+    app.get('/test/', async (req, res) => {
         setHeaders(res);
-        res.redirect('https://week8task.wordpress.com');
+
+        const URL = req.query.URL;
+
+        const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
+        const page = await browser.newPage();
+        await page.goto(URL);
+
+        await page.waitForSelector('#bt');
+        await page.click('#bt');
+
+        await page.waitForSelector('#inp');
+        let text = await (await page.$('#inp')).evaluate(textField => textField.value);
+
+        res.end(text);
     });
 
     app.post('/insert/', (req, res) => {
