@@ -37,7 +37,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         const URL = req.query.URL;
 
         try {
-            const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
+            const browser = await puppeteer.launch({headless: false, args: ["--no-sandbox"]});
             const page = await browser.newPage();
             await page.goto(URL);
 
