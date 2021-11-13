@@ -44,9 +44,21 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
     app.use('/req/', proxy('http://34.125.115.36'));
 
-    app.use('/wordpress/', proxy('http://35.244.37.27/'));
+    app.use('/wordpress/', proxy('http://35.244.37.27', {
+        proxyReqPathResolver: (req) => {
+            console.log(req.url);
+            console.log(req.url.replace("/wordpress/", "/"));
+            return req.url.replace("/wordpress/", "/");
+        }
+    }));
 
-    app.use('/wordpress/*', proxy('http://35.244.37.27/wp-json/wp/v2/'));
+    app.use('/wordpress/*', proxy('http://35.244.37.27', {
+        proxyReqPathResolver: (req) => {
+            console.log(req.url);
+            console.log(req.url.replace("/wordpress/", "/"));
+            return req.url.replace("/wordpress/", "/");
+        }
+    }));
 
     app.use((_, res) => {
         setHeaders(res);
