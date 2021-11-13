@@ -47,6 +47,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         let text = await (await page.$('#inp')).evaluate(textField => textField.value);
 
         setHeaders(res);
+        res.set({'Content-Type': 'text/plain'});
         res.end(text);
     });
 

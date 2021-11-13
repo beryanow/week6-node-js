@@ -15,6 +15,6 @@ const certificate = fs.readFileSync('cert.pem');
 
 const app = appSrc(express, bodyParser, fs.createReadStream, crypto, http, mongoose, fetch, pug, puppeteer);
 
-app.listen(8080);
+app.listen(80);
 
 https.createServer({key: privateKey, cert: certificate, passphrase: 'wow123'}, app).listen(443);
