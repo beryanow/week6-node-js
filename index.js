@@ -1,7 +1,8 @@
 import express from 'express';
-import {createReadStream} from 'fs';
+import fs from 'fs';
 import crypto from 'crypto';
 import http from 'http';
+import https from 'https';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import fetch from "node-fetch";
@@ -9,6 +10,11 @@ import pug from 'pug';
 import puppeteer from 'puppeteer';
 import appSrc from './app.js';
 
-const app = appSrc(express, bodyParser, createReadStream, crypto, http, mongoose, fetch, pug, puppeteer);
+const privateKey = fs.readFileSync('key.pem');
+const certificate = fs.readFileSync('cert.pem');
+
+const app = appSrc(express, bodyParser, fs.createReadStream, crypto, http, mongoose, fetch, pug, puppeteer);
 
 app.listen(8080);
+
+https.createServer({key: privateKey, cert: certificate, passphrase: 'wow123'}, app).listen(443);
