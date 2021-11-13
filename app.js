@@ -51,7 +51,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             return req.url.replace("/wordpress/", "/");
         },
         userResDecorator: (proxyRes, proxyResData) => {
-            console.log(proxyResData);
+            console.log(proxyResData.toString());
             return proxyResData;
         }
     }));
@@ -63,7 +63,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             return req.url.replace("/wordpress/", "/");
         },
         userResDecorator: (proxyRes, proxyResData) => {
-            console.log(proxyResData);
+            console.log(proxyResData.toString());
             return proxyResData;
         }
     }));
