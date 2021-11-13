@@ -11,4 +11,4 @@ import appSrc from './app.js';
 
 const app = appSrc(express, bodyParser, fs.createReadStream, crypto, http, mongoose, fetch, pug, puppeteer);
 
-app.listen(80);
+app.listen(8080);
