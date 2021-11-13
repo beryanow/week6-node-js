@@ -36,16 +36,19 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     app.get('/test/', async (req, res) => {
         const URL = req.query.URL;
 
-        const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
-        const page = await browser.newPage();
-        await page.goto(URL);
+        try {
+            const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
+            const page = await browser.newPage();
+            await page.goto(URL);
 
-        await page.waitForSelector('#bt');
-        await page.click('#bt');
+            await page.waitForSelector('#bt');
+            await page.click('#bt');
 
-        await page.waitForSelector('#inp');
-        let text = await (await page.$('#inp')).evaluate(textField => textField.value);
-
+            await page.waitForSelector('#inp');
+            let text = await (await page.$('#inp')).evaluate(textField => textField.value);
+        } catch (e) {
+            console.error(e);
+        }
         setHeaders(res);
         res.end(text);
     });
