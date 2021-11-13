@@ -26,6 +26,8 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
     const app = express();
 
+    app.use(express.static('static'));
+
     app.use(bodyParser());
 
     app.use('/login/', (_, res) => {
