@@ -1,9 +1,4 @@
-import mongoose from 'mongoose';
-import fetch from "node-fetch";
-import pug from 'pug';
-import puppeteer from 'puppeteer';
-
-export default function appSrc(express, bodyParser, createReadStream, crypto, http) {
+export default function appSrc(express, bodyParser, createReadStream, crypto, http, mongoose, fetch, pug, puppeteer) {
     const UserSchema = mongoose.Schema({login: String, password: String})
     const UserModel = mongoose.model('User', UserSchema);
 
