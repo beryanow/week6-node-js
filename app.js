@@ -41,6 +41,8 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         const random3 = req.body.random3;
         const addr = req.query.addr;
 
+        console.log(addr);
+
         fetch(addr).then(async content => {
             const template = await content.text();
             const render = pug.render(template,{random2, random3});
