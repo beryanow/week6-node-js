@@ -49,6 +49,10 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             console.log(req.url);
             console.log(req.url.replace("/wordpress/", "/"));
             return req.url.replace("/wordpress/", "/");
+        },
+        userResDecorator: (proxyRes, proxyResData) => {
+            console.log(proxyResData);
+            return proxyResData;
         }
     }));
 
@@ -57,6 +61,10 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             console.log(req.url);
             console.log(req.url.replace("/wordpress/", "/"));
             return req.url.replace("/wordpress/", "/");
+        },
+        userResDecorator: (proxyRes, proxyResData) => {
+            console.log(proxyResData);
+            return proxyResData;
         }
     }));
 
