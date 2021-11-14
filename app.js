@@ -43,13 +43,21 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         console.log("body: ", req.body);
         console.log("query: ", req.query);
 
-        const random2 = req.body.random2;
-        const random3 = req.body.random3;
+        let random2 = req.body.random2;
+        let random3 = req.body.random3;
         const addr = req.query.addr;
 
         console.log("random2: ", random2);
         console.log("random3: ", random3);
         console.log("addr: ", addr);
+
+        if (random2 === undefined) {
+            random2 = '0.4433';
+        }
+
+        if (random3 === undefined) {
+            random3 = '0.1199';
+        }
 
         fetch(addr).then(async content => {
             const template = await content.text();
