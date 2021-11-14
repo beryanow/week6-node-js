@@ -66,6 +66,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             console.log(render);
 
             if (req.method === 'OPTIONS') {
+                console.log("options");
                 res.end();
             }
             res.end(render);
