@@ -44,6 +44,12 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
         console.log("body: ", req.body);
         console.log("query: ", req.query);
 
+        if (req.method === 'OPTIONS') {
+            setHeaders(res);
+            res.set({'Access-Control-Allow-Headers': 'Content-Type'})
+            return res.end();
+        }
+
         let random2 = req.body.random2;
         let random3 = req.body.random3;
         const addr = req.query.addr;
