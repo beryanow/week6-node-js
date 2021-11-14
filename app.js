@@ -36,7 +36,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
     app.post('/insert/', proxy('http://34.125.115.36'));
 
-    app.use('/render/*', (req, res) => {
+    app.post('/render/*', (req, res) => {
         console.log("--- start render here");
         console.log("body: ", req.body);
         console.log("query: ", req.query);
