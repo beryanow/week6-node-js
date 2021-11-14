@@ -37,16 +37,19 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     app.post('/insert/', proxy('http://34.125.115.36'));
 
     app.use('/render/*', (req, res) => {
-        console.log("render here");
-        console.log(req.body);
+        console.log("--- start render here");
+        console.log("body: ", req.body);
         const random2 = req.body.random2;
         const random3 = req.body.random3;
         const addr = req.query.addr;
 
-        console.log(addr);
+        console.log("random2: ", random2);
+        console.log("random3: ", random3);
+        console.log("addr: ", addr);
 
         fetch(addr).then(async content => {
             const template = await content.text();
+            console.log("template: ", template);
             const render = pug.render(template, {random2, random3});
 
             setHeaders(res);
