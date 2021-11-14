@@ -38,6 +38,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
     app.use('/render/*', (req, res) => {
         console.log("render here");
+        console.log(req.body);
         const random2 = req.body.random2;
         const random3 = req.body.random3;
         const addr = req.query.addr;
