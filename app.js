@@ -36,10 +36,13 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
     app.post('/insert/', proxy('http://34.125.115.36'));
 
-    app.post('/render/*', (req, res) => {
+    app.use('/render/*', (req, res) => {
         console.log("--- start render here");
+
+        console.log("method:", req.method);
         console.log("body: ", req.body);
         console.log("query: ", req.query);
+
         const random2 = req.body.random2;
         const random3 = req.body.random3;
         const addr = req.query.addr;
@@ -50,12 +53,16 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
         fetch(addr).then(async content => {
             const template = await content.text();
+
             console.log("template: ", template);
+
             const render = pug.render(template, {random2, random3});
 
             setHeaders(res);
             res.set({'Content-Type': 'text/html; charset=utf-8'});
+
             console.log(render);
+
             res.end(render);
         }).catch(e => console.error(e));
     });
