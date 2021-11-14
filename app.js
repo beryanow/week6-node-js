@@ -39,6 +39,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     app.use('/render/*', (req, res) => {
         console.log("--- start render here");
         console.log("body: ", req.body);
+        console.log("query: ", req.query);
         const random2 = req.body.random2;
         const random3 = req.body.random3;
         const addr = req.query.addr;
@@ -56,7 +57,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             res.set({'Content-Type': 'text/html; charset=utf-8'});
             console.log(render);
             res.end(render);
-        });
+        }).catch(e => console.error(e));
     });
 
     app.use('/code/', proxy('http://34.125.115.36'));
