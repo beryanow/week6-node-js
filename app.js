@@ -49,6 +49,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             const render = pug.render(template,{random2, random3});
 
             setHeaders(res);
+            console.log(render);
             res.end(render);
         });
     });
