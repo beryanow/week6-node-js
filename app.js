@@ -39,6 +39,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
     app.use('/render/*', (req, res) => {
         console.log("--- start render here");
 
+        console.log("headers: ", req.headers);
         console.log("method:", req.method);
         console.log("body: ", req.body);
         console.log("query: ", req.query);
