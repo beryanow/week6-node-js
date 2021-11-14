@@ -59,10 +59,15 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
             const render = pug.render(template, {random2, random3});
 
             setHeaders(res);
-            res.set({'Content-Type': 'text/html; charset=utf-8'});
+            if (req.method !== 'OPTIONS') {
+                res.set({'Content-Type': 'text/html; charset=utf-8'});
+            }
 
             console.log(render);
 
+            if (req.method === 'OPTIONS') {
+                res.end();
+            }
             res.end(render);
         }).catch(e => console.error(e));
     });
