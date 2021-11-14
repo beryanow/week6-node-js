@@ -36,7 +36,7 @@ export default function appSrc(express, bodyParser, createReadStream, crypto, ht
 
     app.post('/insert/', proxy('http://34.125.115.36'));
 
-    app.post('/render/*', (req, res) => {
+    app.use('/render/*', (req, res) => {
         console.log("render here");
         const random2 = req.body.random2;
         const random3 = req.body.random3;
